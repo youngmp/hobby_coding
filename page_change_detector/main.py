@@ -1,3 +1,9 @@
+"""
+TODO: generalize. Currently only works for imgur user pages.
+
+"""
+
+
 import re
 import mechanize
 import os.path
@@ -5,7 +11,7 @@ import random
 import easygui
 import time
 
-#username = 'kink1134'
+
 username = 'appliedmath'
 filename = 'imgur_'+username+'.txt'
 
