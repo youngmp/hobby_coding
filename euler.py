@@ -131,7 +131,6 @@ def main():
     t = np.linspace(t0,tend,int((tend-t0)/dt))
 
     # use the same syntax as odeint
-    #sol = LSolve(example,x0,t,args=(1,1))
     #sol = ESolve(example2,x0,t)
     #sol = ESolve(example,x0,t,args=(1,1))
     x0 = [1,2,3]
