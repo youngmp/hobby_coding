@@ -1,7 +1,9 @@
 """
 Youngmin Park yop6@pitt.edu
 
-TODO: add buttons for initial conditions
+TODO:
+add buttons for initial conditions
+add population counter
 
 Conway's game of life
 http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
