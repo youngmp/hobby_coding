@@ -1,7 +1,7 @@
 """
 Youngmin Park yop6@pitt.edu
 
-Please use this code however you like.
+TODO: add buttons for initial conditions
 
 Conway's game of life
 http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
