@@ -66,13 +66,13 @@ def survive(lives):
 """
 glider init
 """
-"""
+
 grid[2][2] = 1
 grid[3][3] = 1
 grid[3][4] = 1
 grid[4][2] = 1
 grid[4][3] = 1
-"""
+
 """
 other init
 """
@@ -101,21 +101,34 @@ start=False
 pause=True
 #stop=False
 
+# intro textinstructions
+introx=winw/10;introy=winh/4
+intromargin=35
+
 # --- user instructions
 print "click and drag to add initial conditions"
 print "press the green button to start"
 print "press the yellow button to pause"
 #print "press the red button to kill everything"
 
+
+# FONTS
+font = pygame.font.Font(None,30)
+
+no_click = True # for use in flagging all events before click
+
+
 # -------- Main Program Loop -----------
 while not done:
     
     # --- Main event loop
     
+
     for event in pygame.event.get(): # User did something
         if event.type == pygame.QUIT: # If user clicked close
             done = True # Flag that we are done so we exit this loop
         if event.type == pygame.MOUSEBUTTONDOWN:
+            no_click = False
             player_position = pygame.mouse.get_pos()
             x = player_position[0]
             y = player_position[1]
@@ -277,10 +290,19 @@ while not done:
     # First, clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
     screen.fill(BLACK)
+    
 
     # draw start/pause/stop buttons (green/yellow/red)
     pygame.draw.rect(screen, GREEN, [startx,starty,startw,starth])
     pygame.draw.rect(screen, YELLOW, [pausex,pausey,pausew,pauseh])
+
+    # set up text on buttons
+    font = pygame.font.Font(None,30)
+    b_start_txt = font.render('Start',True,BLACK,GREEN)
+    b_pause_txt = font.render('Pause',True,BLACK,YELLOW)
+    screen.blit(b_start_txt,(startx,starty))
+    screen.blit(b_pause_txt,(pausex,pausey))
+    
     #pygame.draw.rect(screen, RED, [stopx,stopy,stopw,stoph])
 
     
@@ -307,6 +329,16 @@ while not done:
     #            color = (100,100,100)
     #        pygame.draw.rect(screen, color, [row*(width+margin)+margin,
     #                                         column*(width+margin)+margin,width,height]) 
+
+
+    # display instructions before mouse click
+    if no_click:
+        intro_txt1 = font.render('1. Click and drag to set initial conditions',True,WHITE,BLACK)
+        intro_txt2 = font.render('2. Then click the green start button',True,WHITE,BLACK)
+        screen.blit(intro_txt1,(introx,introy))
+        screen.blit(intro_txt2,(introx,introy+intromargin))
+
+
 
 
     # --- Limit to 60 frames per second
