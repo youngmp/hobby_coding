@@ -99,7 +99,7 @@ stopw=rightspace-2*margin;stoph=50
 
 start=False
 pause=True
-#stop=False
+stop=False
 
 # intro textinstructions
 introx=winw/10;introy=winh/4
@@ -116,15 +116,17 @@ print "press the yellow button to pause"
 font = pygame.font.Font(None,30)
 
 no_click = True # for use in flagging all events before click
+# or after stop button press
 
 
 # -------- Main Program Loop -----------
 while not done:
-    
+    event_catch = False # use to catch a single frame event
     # --- Main event loop
     
 
     for event in pygame.event.get(): # User did something
+        
         if event.type == pygame.QUIT: # If user clicked close
             done = True # Flag that we are done so we exit this loop
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -142,15 +144,21 @@ while not done:
                 pause = True
                 stop = False
                 print 'pause'
-            #if (x > stopx and x < stopx + stopw) and (y > stopy and y < stopy+stoph):
-            #    start = False
-            #    pause = False
-            #    stop = True
-            #    print 'stop'
+
+            if (x > stopx and x < stopx + stopw) and (y > stopy and y < stopy+stoph):
+                event_catch = True
+                start = False
+                pause = False
+                stop = True
+                no_click = True
+                print 'stop'
 
             #print start,pause,stop
+
+        # user initial conditions click and drag
         if pygame.mouse.get_pressed()[0]:
             #elif event.type == pygame.MOUSEBUTTONDOWN:
+
             player_position = pygame.mouse.get_pos()
             x = player_position[0]
             y = player_position[1]
@@ -280,11 +288,13 @@ while not done:
         
         # --- Drawing code should go here
             
-    #if stop:
-    #    grid = [ [0 for j in range(grids)] for i in range(grids)]
-    #    gridtemp = [ [0 for j in range(grids)] for i in range(grids)]
-    #    grid2temp = [ [0 for j in range(grids)] for i in range(grids)]
-    #    grid3temp = [ [0 for j in range(grids)] for i in range(grids)]
+    if stop and event_catch:
+        grid = [ [0 for j in range(grids)] for i in range(grids)]
+        prevgrid = [ [0 for j in range(grids)] for i in range(grids)]
+        prev2grid = [ [0 for j in range(grids)] for i in range(grids)]
+        prev3grid = [ [0 for j in range(grids)] for i in range(grids)]
+
+        # see if no_click for intro text
     #    screen.fill(BLACK)
         
     # First, clear the screen to white. Don't put other drawing commands
@@ -295,13 +305,16 @@ while not done:
     # draw start/pause/stop buttons (green/yellow/red)
     pygame.draw.rect(screen, GREEN, [startx,starty,startw,starth])
     pygame.draw.rect(screen, YELLOW, [pausex,pausey,pausew,pauseh])
+    pygame.draw.rect(screen, RED, [stopx,stopy,stopw,stoph])
 
     # set up text on buttons
     font = pygame.font.Font(None,30)
     b_start_txt = font.render('Start',True,BLACK,GREEN)
     b_pause_txt = font.render('Pause',True,BLACK,YELLOW)
+    b_stop_txt = font.render('Stop',True,BLACK,RED)
     screen.blit(b_start_txt,(startx,starty))
     screen.blit(b_pause_txt,(pausex,pausey))
+    screen.blit(b_stop_txt,(stopx,stopy))
     
     #pygame.draw.rect(screen, RED, [stopx,stopy,stopw,stoph])
 
@@ -337,7 +350,6 @@ while not done:
         intro_txt2 = font.render('2. Then click the green start button',True,WHITE,BLACK)
         screen.blit(intro_txt1,(introx,introy))
         screen.blit(intro_txt2,(introx,introy+intromargin))
-
 
 
 
