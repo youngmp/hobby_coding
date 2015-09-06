@@ -1,6 +1,8 @@
 """
 Youngmin Park yop6@pitt.edu
 
+test mod
+
 TODO:
 add buttons for initial conditions
 add population counter
